@@ -1,0 +1,50 @@
+<head>
+  <title>Edit this Figure</title>
+</head>
+<h1>Edit this Figure!</h1>
+
+<form action='/figures/<%= @figure.id %>' method='POST'>
+  
+  <input type='text' value='<%=@figure.name%>'id="figure_name" name='figure[name]' />
+
+
+  <p>Edit exisiting landmarks...</p>
+  <p>
+
+
+      <% @landmarks.each do |landmark| %>
+      <input type="checkbox" id="landmark_<%=landmark.id%>" name="landmark_name[]" value="<%= landmark.id %>" <%= checked="checked" if landmark.figure_id == @figure.id%>><%= landmark.name %><br>
+      <% end %>
+  </p>
+
+  <h2>or create a new landmark!</h2>
+
+    <input type='text' placeholder='Enter a landmark name...'id="new_landmark" name='landmark[name]' />
+    <input type='text' placeholder='Enter the year this was completed...'id="landmark_year_completed" name='landmark[year_completed]' /><br>
+    <br>
+
+    <p>Select an exisiting title...</p>
+    <p>
+
+        <% @titles.each do |title| %>
+        <input type="checkbox" id="title_<%=title.id%>" name="title_name[]" value="<%= title.id %>"
+        <%= checked="checked" if title.figures.find_by(id:@figure.id)%>><%= title.name %><br>
+        <% end %>
+    </p>
+
+    <h2>or create a new title</h2>
+
+      <input type='text' placeholder='Enter title:'id="new_title" name='title[name]' />
+      <br>
+
+  <input type="submit" value="Edit Figure">
+</form>
+
+
+<p visibility="hidden">
+  expect(page.body).to include('figure[name]')
+  expect(page.body).to include('figure[title_ids][]')
+  expect(page.body).to include('figure[landmark_ids][]')
+  expect(page.body).to include('landmark[name]')
+  expect(page.body).to include('title[name]')
+</p>

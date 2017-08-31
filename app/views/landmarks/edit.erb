@@ -1,0 +1,19 @@
+<h1>Edit this landmark</h1>
+<form action='/landmarks/<%= @landmark.id %>' method='POST'>
+  <input type='hidden' name='_method' value='PATCH'/>
+  <input type='text' placeholder='Enter the name of the Landmark...' id="name" name='landmark[name]' value="<%= @landmark.name %>" />
+  <input type='text' placeholder='Enter the year completed' id="year_completed" name='landmark[year_completed]' value="<%= @landmark.year_completed %>"/>
+
+  <p>Select an exisiting figure...</p>
+  <p>
+    <select name ='landmark[figure_id]'>
+      <% @figures.each do |figure| %>
+      <option value="<%= figure.id %>" <%= selected="selected" if figure.id == @landmark.figure_id%>>
+        <%= figure.name %>
+      </option>
+      <% end %>
+    </select>
+  </p>
+
+  <input type='submit' value="Edit Landmark" />
+</form>
